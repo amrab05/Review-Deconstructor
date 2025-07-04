@@ -1,0 +1,168 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-blue: #0052cc;
+    --primary-blue-hover: #0041a3;
+    --light-blue-bg: #e6f0ff;
+    --dark-text: #172b4d;
+    --light-text: #5e6c84;
+    --border-color: #dfe1e6;
+    --background-color: #ffffff;
+    --container-bg: #f7f8f9;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: var(--container-bg);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+/* --- Layout & Header --- */
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.main-header {
+    background-color: var(--background-color);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* --- Typography & Core Content --- */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--light-text);
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* --- Input & Buttons --- */
+.input-section {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    line-height: 1.5;
+    resize: vertical;
+    margin-bottom: 1rem;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px var(--light-blue-bg);
+}
+
+#deconstruct-btn, .button-primary {
+    display: inline-block;
+    background-color: var(--primary-blue);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+}
+
+#deconstruct-btn:hover, .button-primary:hover {
+    background-color: var(--primary-blue-hover);
+}
+
+/* --- Results & Upsell Sections --- */
+#results-section, #upsell-section {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.tag {
+    display: inline-block;
+    background-color: var(--light-blue-bg);
+    color: var(--primary-blue);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.empathy-point {
+    font-style: italic;
+    color: var(--light-text);
+    border-left: 3px solid var(--primary-blue);
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+#upsell-section {
+    border-top: 4px solid var(--primary-blue);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+    .input-section, #results-section, #upsell-section {
+        padding: 1.5rem;
+    }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negative Review Deconstructor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">AI Advisors Group</div>
+    </header>
+
+    <main class="container">
+        <h1>Stop Guessing. Start Understanding.</h1>
+        <p class="subtitle">A negative review isn't just a rating; it's a goldmine of data. Paste any customer complaint below to instantly deconstruct its root cause—for free.</p>
+
+        <div class="input-section">
+            <label for="review-text">Paste the full customer review here:</label>
+            <textarea id="review-text" rows="8" placeholder="e.g., 'I'm so frustrated. I ordered a blue shirt but received a red one, and now I can't figure out how to return it. Your website is confusing and no one is calling me back.'"></textarea>
+            <button id="deconstruct-btn">Deconstruct Review</button>
+        </div>
+
+        <!-- This entire section is hidden by default -->
+        <div id="results-section" style="display:none;">
+            <h2>Root Cause Analysis</h2>
+
+            <h3>Primary Issue Detected:</h3>
+            <p class="tag" id="primary-issue"></p>
+
+            <h3>Secondary Issues Detected:</h3>
+            <div id="secondary-issues">
+                <!-- JavaScript will populate tags here -->
+            </div>
+
+            <h3>Suggested Empathy Point for Your Reply:</h3>
+            <p class="empathy-point" id="empathy-point"></p>
+        </div>
+
+        <!-- The Upsell Bridge Section (Initially hidden, will be shown with results) -->
+        <div id="upsell-section" style="display:none;">
+            <h2>Did you find this useful?</h2>
+            <p>This tool analyzed <strong>one</strong> conversation. Imagine what you could learn by analyzing all 1,000 of them this month.</p>
+            <p>That's what <strong>Conversation Analyzer</strong> does. Find the hidden patterns that are costing you customers and revenue.</p>
+            <a href="#" id="cta-btn" class="button-primary">Try Conversation Analyzer Free</a>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
