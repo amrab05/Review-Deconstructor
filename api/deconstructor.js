@@ -1,9 +1,9 @@
 // This is a Vercel-style serverless function, RE-ENGINEERED FOR GOOGLE GEMINI.
 // It will listen at the endpoint /api/deconstructor
 
-export default async function handler(request, response) {
+export default async function handler(request, response) {I 
     // 1. We only accept POST requests
-    if (request.method !== 'POST') {
+    if (request.method !== 'POST') {1. 
         return response.status(405).json({ error: 'Method Not Allowed' });
     }
 
