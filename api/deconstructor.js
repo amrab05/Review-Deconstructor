@@ -1,4 +1,4 @@
-// This is a Vercel-style serverless function, V1.1 - UPGRADED FOR CHURN METER & FULL REPLY
+// This is a Vercel-style serverless function, V1.2 - FINAL ROBUST PARSING
 // It will listen at the endpoint /api/deconstructor
 
 export default async function handler(request, response) {
@@ -30,13 +30,7 @@ export default async function handler(request, response) {
 
     The user's review is: "${reviewText}"
 
-    Your response MUST be in a clean JSON format and nothing else. Do not add any extra text or markdown formatting. Your entire response must be ONLY the raw JSON object, like this example:
-    {
-      "primary_issue": "Incorrect Item Received",
-      "secondary_issues": ["Return Process Difficulty", "Delayed Response / No Update"],
-      "churn_score": 4,
-      "suggested_reply": "I am so sorry to hear you received the wrong item and that our process has been frustrating. I am personally looking into this right now to ensure we get the correct product shipped to you today, along with a prepaid label to return the original."
-    }`;
+    Your response MUST be in a clean JSON format and nothing else. Do not add any extra text or markdown formatting. Your entire response must be ONLY the raw JSON object.`;
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
@@ -55,18 +49,34 @@ export default async function handler(request, response) {
         if (!geminiResponse.ok) {
             const errorBody = await geminiResponse.json();
             console.error('Gemini API Error:', errorBody);
-            return response.status(geminiResponse.status).json({ error: 'Failed to get analysis from AI provider.' });
+            return response.status(geminiResponse.status).json({ error: `Failed to get analysis from AI provider. Status: ${geminiResponse.status}` });
         }
 
         const data = await geminiResponse.json();
-        const resultText = data.candidates[0].content.parts[0].text;
-        const resultJson = JSON.parse(resultText);
+        
+        // --- THIS IS THE NEW, ROBUST PARSER ---
+        let resultText = data.candidates[0].content.parts[0].text;
+        
+        // Find the start and end of the JSON object
+        const startIndex = resultText.indexOf('{');
+        const endIndex = resultText.lastIndexOf('}');
+        
+        if (startIndex === -1 || endIndex === -1) {
+            throw new Error("AI response did not contain valid JSON.");
+        }
+        
+        // Extract only the JSON part of the string
+        const jsonString = resultText.substring(startIndex, endIndex + 1);
+        
+        const resultJson = JSON.parse(jsonString);
+        // --- END OF NEW CODE ---
 
         // 6. Send the clean JSON result back to our frontend
         return response.status(200).json(resultJson);
 
     } catch (error) {
-        console.error('Internal server error during Gemini call:', error);
-        return response.status(500).json({ error: 'An unexpected error occurred.' });
+        console.error('Internal server error during final processing:', error.message);
+        console.error('Full AI Response Text:', data?.candidates[0]?.content?.parts[0]?.text || 'Not available');
+        return response.status(500).json({ error: 'An unexpected error occurred during final processing.' });
     }
 }
