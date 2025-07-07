@@ -1,4 +1,4 @@
-// This is a Vercel-style serverless function, V1.2 - FINAL ROBUST PARSING
+// This is a Vercel-style serverless function, V1.3 - FINAL PROMPT ROBUSTNESS
 // It will listen at the endpoint /api/deconstructor
 
 export default async function handler(request, response) {
@@ -21,16 +21,17 @@ export default async function handler(request, response) {
         return response.status(500).json({ error: 'Server configuration error.' });
     }
 
-    // 4. Construct the UPGRADED AI Prompt for Gemini
-    const prompt = `You are an expert customer service analyst. Your task is to deconstruct a customer complaint. Read the following review text and perform these actions:
-    1. Identify the single most significant issue from the following list: Delayed Response/No Update, Billing/Fee Confusion, Unclear Next Steps, Difficulty Reaching Representative, Case/Order Status Uncertainty, Document/File Confusion, Jargon/Term Confusion, Shipping/Delivery Delay, Damaged/Incorrect Item, Return/Refund Difficulty, Product Not As Described, Website/Checkout Issue, Poor Agent Experience, Discount Code Issue.
-    2. Identify any other secondary issues present from the same list.
-    3. Analyze the review and assign a 'churn_score' from 1 to 5 based on the customer's perceived risk of leaving. Use this rubric: Score 1 (Low Risk): Minor complaint, not frustrated. Score 2 (Moderate Risk): Clear frustration, but seems willing to resolve. Score 3 (High Risk): Expressing anger or multiple problems, trust is damaged. Score 4 (Very High Risk): Extreme anger, feels ignored, or threatening action. Score 5 (Critical/Churned): Explicitly states they are leaving or canceling.
-    4. Write a professional, empathetic, two-sentence reply that a business owner could use. The first sentence must acknowledge the primary issue. The second sentence must suggest a positive next step or resolution.
+    // 4. Construct the FINAL, MOST ROBUST AI Prompt
+    const prompt = `You are an expert customer service analyst. Your task is to deconstruct a customer complaint and return a valid JSON object.
+    Read the following review text: "${reviewText}"
 
-    The user's review is: "${reviewText}"
+    Now, perform these four actions and ensure every corresponding field is in your JSON response:
+    1.  **primary_issue**: Identify the single most significant issue from this list: Delayed Response/No Update, Billing/Fee Confusion, Unclear Next Steps, Difficulty Reaching Representative, Case/Order Status Uncertainty, Document/File Confusion, Jargon/Term Confusion, Shipping/Delivery Delay, Damaged/Incorrect Item, Return/Refund Difficulty, Product Not As Described, Website/Checkout Issue, Poor Agent Experience, Discount Code Issue.
+    2.  **secondary_issues**: Identify any other secondary issues present from the same list.
+    3.  **churn_score**: Assign a 'churn_score' from 1 to 5 based on the customer's perceived risk of leaving, using this rubric: 1 (Low Risk), 2 (Moderate Risk), 3 (High Risk), 4 (Very High Risk), 5 (Critical/Churned).
+    4.  **suggested_reply**: Write a professional, empathetic, two-sentence reply that a business owner could use. The first sentence must acknowledge the primary issue. The second sentence must suggest a positive next step or resolution.
 
-    Your response MUST be in a clean JSON format and nothing else. Do not add any extra text or markdown formatting. Your entire response must be ONLY the raw JSON object.`;
+    Your response MUST be ONLY the raw JSON object and nothing else. Do not add any extra text or markdown formatting. The JSON object must contain these exact keys: "primary_issue", "secondary_issues", "churn_score", and "suggested_reply".`;
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
@@ -54,10 +55,8 @@ export default async function handler(request, response) {
 
         const data = await geminiResponse.json();
         
-        // --- THIS IS THE NEW, ROBUST PARSER ---
+        // Robust JSON Parser
         let resultText = data.candidates[0].content.parts[0].text;
-        
-        // Find the start and end of the JSON object
         const startIndex = resultText.indexOf('{');
         const endIndex = resultText.lastIndexOf('}');
         
@@ -65,18 +64,14 @@ export default async function handler(request, response) {
             throw new Error("AI response did not contain valid JSON.");
         }
         
-        // Extract only the JSON part of the string
         const jsonString = resultText.substring(startIndex, endIndex + 1);
-        
         const resultJson = JSON.parse(jsonString);
-        // --- END OF NEW CODE ---
 
         // 6. Send the clean JSON result back to our frontend
         return response.status(200).json(resultJson);
 
     } catch (error) {
         console.error('Internal server error during final processing:', error.message);
-        console.error('Full AI Response Text:', data?.candidates[0]?.content?.parts[0]?.text || 'Not available');
         return response.status(500).json({ error: 'An unexpected error occurred during final processing.' });
     }
 }
