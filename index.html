@@ -26,6 +26,15 @@
         <div id="results-section" style="display:none;">
             <h2>Root Cause Analysis</h2>
 
+            <!-- NEW: Churn Meter Section -->
+            <h3>Churn Meter:</h3>
+            <div class="churn-meter-container">
+                <div class="churn-meter-bar">
+                    <div id="churn-meter-fill"></div>
+                </div>
+                <span id="churn-meter-text"></span>
+            </div>
+
             <h3>Primary Issue Detected:</h3>
             <p class="tag" id="primary-issue"></p>
 
@@ -34,20 +43,31 @@
                 <!-- JavaScript will populate tags here -->
             </div>
 
-            <h3>Suggested Empathy Point for Your Reply:</h3>
-            <p class="empathy-point" id="empathy-point"></p>
+            <!-- UPDATED: Suggested Reply Section -->
+            <h3>Suggested Reply:</h3>
+            <p class="suggested-reply" id="suggested-reply"></p>
+            
+            <!-- NEW: Email Capture Section -->
+            <div id="email-capture-section">
+                <h3>Happy with this analysis?</h3>
+                <p class="subtitle">Enter your email and we'll send you a copy for your records.</p>
+                <div class="email-form">
+                    <input type="email" id="email-input" placeholder="you@company.com">
+                    <button id="email-capture-btn">Send Report</button>
+                </div>
+            </div>
         </div>
 
-        <!-- The Upsell Bridge Section (Initially hidden, will be shown with results) -->
+        <!-- UPDATED: Upsell Bridge Section with new text -->
         <div id="upsell-section" style="display:none;">
             <h2>Did you find this useful?</h2>
-            <p>This tool analyzed <strong>one</strong> conversation. Imagine what you could learn by analyzing all 1,000 of them this month.</p>
+            <p>This tool analyzed <strong>one</strong> conversation. Imagine what you could learn by analyzing <strong>100s or 1000s</strong> of them.</p>
             <p>That's what <strong>Conversation Analyzer</strong> does. Find the hidden patterns that are costing you customers and revenue.</p>
             <a href="#" id="cta-btn" class="button-primary">Try Conversation Analyzer Free</a>
         </div>
 
     </main>
-
+    
     <script src="script.js"></script>
 
 </body>

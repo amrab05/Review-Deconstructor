@@ -8,6 +8,9 @@
     --border-color: #dfe1e6;
     --background-color: #ffffff;
     --container-bg: #f7f8f9;
+    --red: #de350b;
+    --yellow: #ffab00;
+    --green: #36b37e;
 }
 
 * {
@@ -145,7 +148,7 @@ textarea:focus {
     margin-bottom: 0.5rem;
 }
 
-.empathy-point {
+.suggested-reply {
     font-style: italic;
     color: var(--light-text);
     border-left: 3px solid var(--primary-blue);
@@ -155,6 +158,87 @@ textarea:focus {
 
 #upsell-section {
     border-top: 4px solid var(--primary-blue);
+}
+
+/* --- NEW: V1.1 Styles --- */
+
+/* Churn Meter Styles */
+.churn-meter-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.churn-meter-bar {
+    width: 200px;
+    height: 12px;
+    background-color: #f0f2f5;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#churn-meter-fill {
+    height: 100%;
+    width: 0%; /* JS will set this */
+    border-radius: 6px;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+#churn-meter-text {
+    margin-left: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.churn-green { background-color: var(--green); }
+.churn-yellow { background-color: var(--yellow); }
+.churn-red { background-color: var(--red); }
+
+/* Email Capture Styles */
+#email-capture-section {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+#email-capture-section .subtitle {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.email-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#email-input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#email-input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px var(--light-blue-bg);
+}
+
+#email-capture-btn {
+    background-color: var(--dark-text);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#email-capture-btn:hover {
+    background-color: #000;
 }
 
 /* --- Responsive Design --- */
