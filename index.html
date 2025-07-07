@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Negative Review Deconstructor</title>
+    <title>Complaint Compass | AI Advisors Group</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="main-header">
-        <div class="logo">AI Advisors Group</div>
+        <!-- FINAL LOGO IMPLEMENTATION -->
+        <div class="logo">
+            <img src="logo.png" alt="Complaint Compass Logo" class="logo-image">
+            <span class="logo-text">COMPLAINT COMPASS™</span>
+        </div>
     </header>
 
     <main class="container">
@@ -19,14 +23,13 @@
         <div class="input-section">
             <label for="review-text">Paste the full customer review here:</label>
             <textarea id="review-text" rows="8" placeholder="e.g., 'I'm so frustrated. I ordered a blue shirt but received a red one, and now I can't figure out how to return it. Your website is confusing and no one is calling me back.'"></textarea>
-            <button id="deconstruct-btn">Deconstruct Review</button>
+            <button id="deconstruct-btn">Analyze Complaint</button>
         </div>
 
         <!-- This entire section is hidden by default -->
         <div id="results-section" style="display:none;">
             <h2>Root Cause Analysis</h2>
 
-            <!-- NEW: Churn Meter Section -->
             <h3>Churn Meter:</h3>
             <div class="churn-meter-container">
                 <div class="churn-meter-bar">
@@ -43,11 +46,9 @@
                 <!-- JavaScript will populate tags here -->
             </div>
 
-            <!-- UPDATED: Suggested Reply Section -->
             <h3>Suggested Reply:</h3>
             <p class="suggested-reply" id="suggested-reply"></p>
             
-            <!-- NEW: Email Capture Section -->
             <div id="email-capture-section">
                 <h3>Happy with this analysis?</h3>
                 <p class="subtitle">Enter your email and we'll send you a copy for your records.</p>
@@ -58,7 +59,6 @@
             </div>
         </div>
 
-        <!-- UPDATED: Upsell Bridge Section with new text -->
         <div id="upsell-section" style="display:none;">
             <h2>Did you find this useful?</h2>
             <p>This tool analyzed <strong>one</strong> conversation. Imagine what you could learn by analyzing <strong>100s or 1000s</strong> of them.</p>
