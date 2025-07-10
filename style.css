@@ -97,4 +97,4 @@ textarea:focus { outline: none; border-color: var(--brand-green); box-shadow: 0 
 @media (max-width: 600px) {
     h1 { font-size: 2rem; }
     .input-section, #results-section, #upsell-section { padding: 1.5rem; }
-}
+} I
