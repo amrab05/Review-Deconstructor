@@ -1,4 +1,4 @@
-// This is our "Mail Carrier" serverless function.
+// This is our "Mail Carrier" serverless function, V1.7 - FINAL 'FROM' ADDRESS FIX
 // It will listen at the endpoint /api/send-report
 
 import { Resend } from 'resend';
@@ -20,9 +20,14 @@ export default async function handler(request, response) {
             return response.status(400).json({ error: 'Missing required data for sending report.' });
         }
 
+        // --- THIS IS THE CORRECTED SECTION ---
+        // We use Resend's default onboarding address, which is always valid.
+        const fromAddress = 'ConvoGauge <onboarding@resend.dev>';
+        // --- END OF CORRECTION ---
+
         // 1. Send the email to the LEAD (the user who wants the report)
         await resend.emails.send({
-            from: 'ConvoGauge <noreply@aiadvisorsgroup.co>', // This "from" address uses your verified domain
+            from: fromAddress,
             to: [leadEmail],
             subject: 'Your Complaint Compass Analysis Report',
             html: `<h1>Your Analysis Report</h1>
@@ -41,7 +46,7 @@ export default async function handler(request, response) {
 
         // 2. Send a notification email to YOU (the business owner)
         await resend.emails.send({
-            from: 'ConvoGauge Lead Alert <noreply@aiadvisorsgroup.co>',
+            from: fromAddress,
             to: [recipientEmail],
             subject: 'New Lead from Complaint Compass!',
             html: `<h1>New Lead Captured!</h1>
@@ -49,7 +54,6 @@ export default async function handler(request, response) {
                    <h2>${leadEmail}</h2>
                    <p>You can follow up with them directly.</p>`
         });
-
 
         // 3. Send a success response back to the browser
         return response.status(200).json({ message: 'Report sent successfully!' });
