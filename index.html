@@ -42,11 +42,25 @@
             <h3>Suggested Reply:</h3>
             <p class="suggested-reply" id="suggested-reply"></p>
             
-            <!-- NEW SIMPLIFIED LEAD CAPTURE -->
+            <!-- NEW FAIL-PROOF LEAD CAPTURE FORM -->
             <div id="email-capture-section">
-                <h3>Get a Copy of This Report</h3>
-                <p class="subtitle">Click the button below to open your email client with this full analysis, ready to send to us or save for your records.</p>
-                <button id="email-report-btn" class="button-primary">Generate Email Report</button>
+                <h3>Email the full breakdown to yourself—no spam, ever.</h3>
+                <p class="subtitle">We’ll send 1 follow-up with more free analyses tips. Unsubscribe any time.</p>
+                
+                <form action="https://formspree.io/f/xeokyveo" method="POST" id="lead-form">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="you@company.com" required>
+                    
+                    <!-- Hidden fields to pass the report data -->
+                    <input type="hidden" name="Original Complaint" id="hidden-complaint">
+                    <input type="hidden" name="Churn Meter" id="hidden-churn">
+                    <input type="hidden" name="Primary Issue" id="hidden-primary">
+                    <input type="hidden" name="Secondary Issues" id="hidden-secondary">
+                    <input type="hidden" name="Suggested Reply" id="hidden-reply">
+
+                    <button type="submit" id="email-capture-btn">Send My Free Report →</button>
+                    <p class="trust-booster">🔒 SSL Secured</p>
+                </form>
             </div>
         </div>
 
@@ -54,7 +68,7 @@
             <h2>Did you find this useful?</h2>
             <p>This tool analyzed <strong>one</strong> conversation. Imagine what you could learn by analyzing <strong>100s or 1000s</strong> of them.</p>
             <p>That's what <strong>ConvoGauge</strong> does. Find the hidden patterns that are costing you customers and revenue.</p>
-            <a href="https://convogauge.com" id="cta-btn" class="button-primary">Try ConvoGauge Free</a>
+            <a href="https://convogauge.com" id="cta-btn" class="button-primary" target="_blank">Try ConvoGauge Free</a>
         </div>
     </main>
     
