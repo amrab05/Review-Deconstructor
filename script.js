@@ -1,4 +1,4 @@
-// This is the "engine" of our application, V1.9 - "SILVER BULLET" MAILTO FIX
+// This is the "engine" of our application, V2.0 - "DIRECT COMMAND" MAILTO FIX
 document.addEventListener('DOMContentLoaded', () => {
 
     const deconstructBtn = document.getElementById('deconstruct-btn');
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- THIS IS THE NEW, MORE ROBUST CODE ---
+    // --- THIS IS THE FINAL, SIMPLIFIED CODE ---
     emailReportBtn.addEventListener('click', () => {
         const recipientEmail = "mike@aiadvisorsgroup.co";
         const subject = "Complaint Compass Analysis Report";
@@ -70,20 +70,11 @@ Suggested Reply:
 "${suggestedReplyEl.textContent.replace(/"/g, '')}"
         `;
 
-        // Create a temporary, invisible link
+        // The simplest, most direct, and universally compatible method.
         const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(reportBody)}`;
-        const a = document.createElement('a');
-        a.href = mailtoLink;
-        
-        // This is the key part: telling it to open in a new tab if possible.
-        a.target = '_blank';
-        
-        // Programmatically click the link and then remove it
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        window.location.href = mailtoLink;
     });
-    // --- END OF NEW CODE ---
+    // --- END OF FINAL CODE ---
 
     function populateResults(data) {
         primaryIssueEl.textContent = data.primary_issue;
