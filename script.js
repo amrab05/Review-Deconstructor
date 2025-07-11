@@ -1,4 +1,4 @@
-// This is the "engine" of our application, V2.0 - "DIRECT COMMAND" MAILTO FIX
+// This is the "engine" of our application, V2.0 - FAIL-PROOF FORMSPREE INTEGRATION
 document.addEventListener('DOMContentLoaded', () => {
 
     const deconstructBtn = document.getElementById('deconstruct-btn');
@@ -6,13 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsSection = document.getElementById('results-section');
     const upsellSection = document.getElementById('upsell-section');
     
-    const churnMeterFill = document.getElementById('churn-meter-fill');
     const churnMeterText = document.getElementById('churn-meter-text');
     const primaryIssueEl = document.getElementById('primary-issue');
     const secondaryIssuesEl = document.getElementById('secondary-issues');
     const suggestedReplyEl = document.getElementById('suggested-reply');
-    const emailReportBtn = document.getElementById('email-report-btn');
 
+    // Hidden form fields
+    const hiddenComplaint = document.getElementById('hidden-complaint');
+    const hiddenChurn = document.getElementById('hidden-churn');
+    const hiddenPrimary = document.getElementById('hidden-primary');
+    const hiddenSecondary = document.getElementById('hidden-secondary');
+    const hiddenReply = document.getElementById('hidden-reply');
+    
     deconstructBtn.addEventListener('click', async () => {
         if (reviewText.value.trim() === '') {
             alert('Please paste a review into the text box first.');
@@ -25,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         upsellSection.style.display = 'none';
 
         try {
+            // NOTE: We still have ONE serverless function for the AI analysis
             const response = await fetch('/api/deconstructor', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -48,35 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- THIS IS THE FINAL, SIMPLIFIED CODE ---
-    emailReportBtn.addEventListener('click', () => {
-        const recipientEmail = "mike@aiadvisorsgroup.co";
-        const subject = "Complaint Compass Analysis Report";
-
-        const reportBody = `
-Complaint Compass Analysis:
------------------------------------
-Original Complaint:
-"${reviewText.value}"
-
------------------------------------
-Root Cause Analysis:
-- Churn Meter: ${churnMeterText.textContent}
-- Primary Issue: ${primaryIssueEl.textContent}
-- Secondary Issues: ${Array.from(secondaryIssuesEl.children).map(tag => tag.textContent).join(', ')}
-
------------------------------------
-Suggested Reply:
-"${suggestedReplyEl.textContent.replace(/"/g, '')}"
-        `;
-
-        // The simplest, most direct, and universally compatible method.
-        const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(reportBody)}`;
-        window.location.href = mailtoLink;
-    });
-    // --- END OF FINAL CODE ---
-
     function populateResults(data) {
+        // Populate visible fields
         primaryIssueEl.textContent = data.primary_issue;
         suggestedReplyEl.textContent = `"${data.suggested_reply}"`;
         secondaryIssuesEl.innerHTML = '';
@@ -87,9 +66,17 @@ Suggested Reply:
             secondaryIssuesEl.appendChild(tag);
         });
         handleChurnMeter(data.churn_score);
+
+        // Populate HIDDEN fields for the Formspree submission
+        hiddenComplaint.value = reviewText.value;
+        hiddenChurn.value = churnMeterText.textContent;
+        hiddenPrimary.value = primaryIssueEl.textContent;
+        hiddenSecondary.value = Array.from(secondaryIssuesEl.children).map(tag => tag.textContent).join(', ');
+        hiddenReply.value = suggestedReplyEl.textContent.replace(/"/g, '');
     }
 
     function handleChurnMeter(score) {
+        const churnMeterFill = document.getElementById('churn-meter-fill');
         const percentage = (score / 5) * 100;
         churnMeterFill.style.width = `${percentage}%`;
         churnMeterFill.classList.remove('churn-green', 'churn-yellow', 'churn-red');
