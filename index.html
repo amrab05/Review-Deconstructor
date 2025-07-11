@@ -9,7 +9,6 @@
 <body>
 
     <header class="main-header">
-        <!-- FINAL LOGO IMPLEMENTATION -->
         <div class="logo">
             <img src="logo.png" alt="Complaint Compass Logo" class="logo-image">
             <span class="logo-text">COMPLAINT COMPASS™</span>
@@ -29,7 +28,6 @@
         <!-- This entire section is hidden by default -->
         <div id="results-section" style="display:none;">
             <h2>Root Cause Analysis</h2>
-
             <h3>Churn Meter:</h3>
             <div class="churn-meter-container">
                 <div class="churn-meter-bar">
@@ -37,35 +35,27 @@
                 </div>
                 <span id="churn-meter-text"></span>
             </div>
-
             <h3>Primary Issue Detected:</h3>
             <p class="tag" id="primary-issue"></p>
-
             <h3>Secondary Issues Detected:</h3>
-            <div id="secondary-issues">
-                <!-- JavaScript will populate tags here -->
-            </div>
-
+            <div id="secondary-issues"></div>
             <h3>Suggested Reply:</h3>
             <p class="suggested-reply" id="suggested-reply"></p>
             
+            <!-- NEW SIMPLIFIED LEAD CAPTURE -->
             <div id="email-capture-section">
-                <h3>Happy with this analysis?</h3>
-                <p class="subtitle">Enter your email and we'll send you a copy for your records.</p>
-                <div class="email-form">
-                    <input type="email" id="email-input" placeholder="you@company.com">
-                    <button id="email-capture-btn">Send Report</button>
-                </div>
+                <h3>Get a Copy of This Report</h3>
+                <p class="subtitle">Click the button below to open your email client with this full analysis, ready to send to us or save for your records.</p>
+                <button id="email-report-btn" class="button-primary">Generate Email Report</button>
             </div>
         </div>
 
         <div id="upsell-section" style="display:none;">
             <h2>Did you find this useful?</h2>
             <p>This tool analyzed <strong>one</strong> conversation. Imagine what you could learn by analyzing <strong>100s or 1000s</strong> of them.</p>
-            <p>That's what <strong>Conversation Analyzer</strong> does. Find the hidden patterns that are costing you customers and revenue.</p>
-            <a href="#" id="cta-btn" class="button-primary">Try Conversation Analyzer Free</a>
+            <p>That's what <strong>ConvoGauge</strong> does. Find the hidden patterns that are costing you customers and revenue.</p>
+            <a href="https://convogauge.com" id="cta-btn" class="button-primary">Try ConvoGauge Free</a>
         </div>
-
     </main>
     
     <script src="script.js"></script>
