@@ -1,4 +1,4 @@
-// This is the "engine" of our application, V1.8 - FAIL-PROOF MAILTO LEAD CAPTURE
+// This is the "engine" of our application, V1.9 - "SILVER BULLET" MAILTO FIX
 document.addEventListener('DOMContentLoaded', () => {
 
     const deconstructBtn = document.getElementById('deconstruct-btn');
@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const primaryIssueEl = document.getElementById('primary-issue');
     const secondaryIssuesEl = document.getElementById('secondary-issues');
     const suggestedReplyEl = document.getElementById('suggested-reply');
-
-    // NEW SIMPLIFIED LEAD CAPTURE BUTTON
     const emailReportBtn = document.getElementById('email-report-btn');
 
     deconstructBtn.addEventListener('click', async () => {
@@ -50,33 +48,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // NEW FAIL-PROOF EMAIL LOGIC
+    // --- THIS IS THE NEW, MORE ROBUST CODE ---
     emailReportBtn.addEventListener('click', () => {
-        const recipientEmail = "mike@aiadvisorsgroup.co"; // Your email address here
+        const recipientEmail = "mike@aiadvisorsgroup.co";
         const subject = "Complaint Compass Analysis Report";
 
-        // Gather all the data from the report
         const reportBody = `
-            Complaint Compass Analysis:
-            -----------------------------------
-            Original Complaint:
-            "${reviewText.value}"
+Complaint Compass Analysis:
+-----------------------------------
+Original Complaint:
+"${reviewText.value}"
 
-            -----------------------------------
-            Root Cause Analysis:
-            - Churn Meter: ${churnMeterText.textContent}
-            - Primary Issue: ${primaryIssueEl.textContent}
-            - Secondary Issues: ${Array.from(secondaryIssuesEl.children).map(tag => tag.textContent).join(', ')}
+-----------------------------------
+Root Cause Analysis:
+- Churn Meter: ${churnMeterText.textContent}
+- Primary Issue: ${primaryIssueEl.textContent}
+- Secondary Issues: ${Array.from(secondaryIssuesEl.children).map(tag => tag.textContent).join(', ')}
 
-            -----------------------------------
-            Suggested Reply:
-            "${suggestedReplyEl.textContent.replace(/"/g, '')}"
+-----------------------------------
+Suggested Reply:
+"${suggestedReplyEl.textContent.replace(/"/g, '')}"
         `;
 
-        // Create the mailto link and trigger it
+        // Create a temporary, invisible link
         const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(reportBody)}`;
-        window.location.href = mailtoLink;
+        const a = document.createElement('a');
+        a.href = mailtoLink;
+        
+        // This is the key part: telling it to open in a new tab if possible.
+        a.target = '_blank';
+        
+        // Programmatically click the link and then remove it
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     });
+    // --- END OF NEW CODE ---
 
     function populateResults(data) {
         primaryIssueEl.textContent = data.primary_issue;
